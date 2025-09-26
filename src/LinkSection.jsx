@@ -1,16 +1,19 @@
 // LinkSection.jsx
 
 import React from 'react';
-import { Github, Mail, Twitter, Instagram, Linkedin, ExternalLink } from 'lucide-react';
+import { FaGithub } from 'react-icons/fa';
+import { FaTwitch } from 'react-icons/fa';
+import { FaSpotify } from 'react-icons/fa';
+import { FaSteam } from 'react-icons/fa';
+import { FaFileContract } from 'react-icons/fa';
 
 export default function LinkSection({ isVisible }) {
   const links = [
-    { icon: Github, label: 'GitHub', url: 'https://github.com', color: 'hover:text-purple-400' },
-    { icon: Mail, label: 'Email', url: 'mailto:your@email.com', color: 'hover:text-blue-400' },
-    { icon: Twitter, label: 'Twitter', url: 'https://twitter.com', color: 'hover:text-cyan-400' },
-    { icon: Instagram, label: 'Instagram', url: 'https://instagram.com', color: 'hover:text-pink-400' },
-    { icon: Linkedin, label: 'LinkedIn', url: 'https://linkedin.com', color: 'hover:text-indigo-400' },
-    { icon: ExternalLink, label: 'Website', url: 'https://yourwebsite.com', color: 'hover:text-green-400' },
+    { icon: FaGithub, label: 'GitHub', url: 'https://github.com/5XGhost143', color: 'hover:text-purple-400' },
+    { icon: FaTwitch, label: 'Twitch', url: 'https://www.twitch.tv/gghost143', color: 'hover:text-blue-400' },
+    { icon: FaSteam, label: 'Steam', url: 'https://steamcommunity.com/id/GHOST143/', color: 'hover:text-cyan-400' },
+    { icon: FaSpotify, label: 'Spotify', url: 'https://open.spotify.com/user/31snna5blfrzmagarfxqcfdyikau', color: 'hover:text-pink-400' },
+    { icon: FaFileContract, label: 'Privacy Policy', url: '/privacy', color: 'hover:text-indigo-400' },
   ];
 
   return (
