@@ -26,7 +26,7 @@ export default function LinkSection({ isVisible }) {
             target="_blank"
             rel="noopener noreferrer"
             className={`
-              group relative overflow-hidden
+              group relative overflow-hidden cursor-none
               flex items-center justify-center p-4 md:p-5
               bg-gradient-to-br from-gray-900/80 to-gray-800/60 
               backdrop-blur-lg border border-gray-700/50
