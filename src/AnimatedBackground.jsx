@@ -126,7 +126,7 @@ export default function AnimatedBackground({ mousePosition }) {
           }
           100% { 
             transform: translateY(0px) translateX(0px) rotate(360deg);
-            opacity: 0; /* Ende unsichtbar */
+            opacity: 0;
           }
         }
 
