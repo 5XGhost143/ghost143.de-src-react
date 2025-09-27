@@ -1,6 +1,6 @@
 // App.jsx
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import Header from './Header';
 import LinkSection from './LinkSection';
 import AnimatedBackground from './AnimatedBackground';
@@ -9,17 +9,30 @@ import MouseCursor from './MouseCursor';
 export default function App() {
   const [isVisible, setIsVisible] = useState(false);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const rafId = useRef(null);
+
+  const handleMouseMove = useCallback((e) => {
+    if (rafId.current) {
+      cancelAnimationFrame(rafId.current);
+    }
+    
+    rafId.current = requestAnimationFrame(() => {
+      setMousePosition({ x: e.clientX, y: e.clientY });
+    });
+  }, []);
 
   useEffect(() => {
     setIsVisible(true);
     
-    const handleMouseMove = (e) => {
-      setMousePosition({ x: e.clientX, y: e.clientY });
-    };
+    window.addEventListener('mousemove', handleMouseMove, { passive: true });
     
-    window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
-  }, []);
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+      if (rafId.current) {
+        cancelAnimationFrame(rafId.current);
+      }
+    };
+  }, [handleMouseMove]);
 
   return (
     <div className="min-h-screen bg-black text-white overflow-hidden relative cursor-none">
