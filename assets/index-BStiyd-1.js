@@ -90,7 +90,7 @@ Error generating stack: `+a.message+`
           }
           100% { 
             transform: translateY(0px) translateX(0px) rotate(360deg);
-            opacity: 0; /* Ende unsichtbar */
+            opacity: 0;
           }
         }
 
