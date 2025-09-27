@@ -35,7 +35,7 @@ export default function App() {
   }, [handleMouseMove]);
 
   return (
-    <div className="min-h-screen bg-black text-white overflow-hidden relative cursor-none" onContextMenu={(e) => e.preventDefault()}>
+    <div className="min-h-screen bg-black text-white overflow-hidden relative cursor-none select-none" onContextMenu={(e) => e.preventDefault()}>
       <MouseCursor mousePosition={mousePosition} />
       <AnimatedBackground mousePosition={mousePosition} />
 
