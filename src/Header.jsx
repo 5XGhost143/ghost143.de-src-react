@@ -13,7 +13,7 @@ export default function Header({ isVisible }) {
       </h1>
       
       <p className="text-xl md:text-2xl text-gray-400 mt-6 font-light tracking-wide">
-        Junior Developer • C# • Python • React
+        Junior Developer
       </p>
     </div>
   );
