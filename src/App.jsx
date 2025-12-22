@@ -8,6 +8,7 @@ export default function App() {
   const [isVisible, setIsVisible] = useState(false);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [isMobile, setIsMobile] = useState(false);
+  const [isClicking, setIsClicking] = useState(false);
   const rafId = useRef(null);
 
   const handleMouseMove = useCallback((e) => {
@@ -18,6 +19,14 @@ export default function App() {
     rafId.current = requestAnimationFrame(() => {
       setMousePosition({ x: e.clientX, y: e.clientY });
     });
+  }, []);
+
+  const handleMouseDown = useCallback(() => {
+    setIsClicking(true);
+  }, []);
+
+  const handleMouseUp = useCallback(() => {
+    setIsClicking(false);
   }, []);
 
   useEffect(() => {
@@ -32,21 +41,25 @@ export default function App() {
     checkMobile();
     window.addEventListener('resize', checkMobile);
     window.addEventListener('mousemove', handleMouseMove, { passive: true });
+    window.addEventListener('mousedown', handleMouseDown);
+    window.addEventListener('mouseup', handleMouseUp);
     
     return () => {
       window.removeEventListener('resize', checkMobile);
       window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('mousedown', handleMouseDown);
+      window.removeEventListener('mouseup', handleMouseUp);
       if (rafId.current) {
         cancelAnimationFrame(rafId.current);
       }
     };
-  }, [handleMouseMove]);
+  }, [handleMouseMove, handleMouseDown, handleMouseUp]);
 
   return (
     <div className="min-h-screen bg-black text-white overflow-hidden relative select-none" 
          style={{ cursor: isMobile ? 'auto' : 'none' }}
          onContextMenu={(e) => e.preventDefault()}>
-      {!isMobile && <MouseCursor mousePosition={mousePosition} />}
+      {!isMobile && <MouseCursor mousePosition={mousePosition} isClicking={isClicking} />}
       <AnimatedBackground mousePosition={mousePosition} />
 
       <div className="relative z-10 flex flex-col items-center justify-center min-h-screen px-4 py-8">
