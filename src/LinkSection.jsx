@@ -10,8 +10,7 @@ export default function LinkSection({ isVisible, isMobile }) {
     { icon: FaGithub, label: 'GitHub', url: 'https://github.com/5XGhost143', color: 'hover:text-purple-400' },
     { icon: FaTwitch, label: 'Twitch', url: 'https://www.twitch.tv/gghost143', color: 'hover:text-blue-400' },
     { icon: FaSteam, label: 'Steam', url: 'https://steamcommunity.com/id/GHOST143/', color: 'hover:text-cyan-400' },
-    { icon: FaSpotify, label: 'Spotify', url: 'https://open.spotify.com/user/31snna5blfrzmagarfxqcfdyikau', color: 'hover:text-pink-400' },
-    { icon: FaFileContract, label: 'Privacy Policy', url: '/privacy.html', color: 'hover:text-indigo-400' },
+    { icon: FaSpotify, label: 'Spotify', url: 'https://open.spotify.com/user/31snna5blfrzmagarfxqcfdyikau', color: 'hover:text-pink-400' }
   ];
 
   return (
