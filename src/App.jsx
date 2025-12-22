@@ -24,7 +24,9 @@ export default function App() {
     setIsVisible(true);
     
     const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768 || 'ontouchstart' in window);
+      const hasTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+      const isTablet = /iPad|Android/i.test(navigator.userAgent);
+      setIsMobile(hasTouch || isTablet);
     };
     
     checkMobile();
