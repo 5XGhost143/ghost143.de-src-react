@@ -20,18 +20,11 @@ export default function AnimatedBackground({ mousePosition, winterEnabled }) {
         delay: Math.random() * 10,
         drift: (Math.random() - 0.5) * 30,
         opacity: Math.random() * 0.6 + 0.4,
-        blur: Math.random() * 2
+        blur: Math.random() * 2,
+        isSnow: true
       }));
     } else {
-      return [...Array(25)].map((_, i) => ({
-        id: i,
-        x: Math.random() * 100,
-        y: Math.random() * 100,
-        size: Math.random() * 4 + 2,
-        duration: Math.random() * 15 + 10,
-        delay: Math.random() * 5,
-        direction: Math.random() > 0.5 ? 1 : -1
-      }));
+      return [];
     }
   }, [winterEnabled]);
 
@@ -67,27 +60,6 @@ export default function AnimatedBackground({ mousePosition, winterEnabled }) {
   return (
     <>
       <style>{`
-        @keyframes floatStar {
-          0% { 
-            transform: translateY(0px) translateX(0px) rotate(0deg);
-            opacity: 0;
-          }
-          10% { 
-            opacity: 0.4;
-          }
-          50% { 
-            transform: translateY(-15px) translateX(10px) rotate(180deg);
-            opacity: 0.7;
-          }
-          90% { 
-            opacity: 0.3;
-          }
-          100% { 
-            transform: translateY(0px) translateX(0px) rotate(360deg);
-            opacity: 0;
-          }
-        }
-
         @keyframes snowfall {
           0% { 
             transform: translateY(-10vh) translateX(0px) rotate(0deg);
@@ -110,6 +82,24 @@ export default function AnimatedBackground({ mousePosition, winterEnabled }) {
             background-position: 100% 50%;
           }
         }
+
+        @keyframes gridMove {
+          0% {
+            transform: translateY(0);
+          }
+          100% {
+            transform: translateY(100px);
+          }
+        }
+
+        @keyframes gridPulse {
+          0%, 100% {
+            opacity: 0.3;
+          }
+          50% {
+            opacity: 0.6;
+          }
+        }
       `}</style>
 
       <div 
@@ -128,41 +118,77 @@ export default function AnimatedBackground({ mousePosition, winterEnabled }) {
         </div>
       )}
 
-      <div className="absolute inset-0 opacity-5">
-        <div className="absolute inset-0" style={{
-          backgroundImage: `
-            linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)
-          `,
-          backgroundSize: '50px 50px'
-        }} />
-      </div>
-
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {particles.map((particle) => (
-          <div
-            key={particle.id}
-            className="absolute rounded-full will-change-transform"
+      {!winterEnabled && (
+        <div className="absolute inset-0 pointer-events-none overflow-hidden">
+          <div 
+            className="absolute inset-0"
             style={{
-              left: `${particle.x}%`,
-              top: `${particle.y}%`,
-              width: `${particle.size}px`,
-              height: `${particle.size}px`,
-              backgroundColor: winterEnabled ? '#FFFFFF' : '#8B5CF6',
-              boxShadow: winterEnabled 
-                ? `0 0 ${particle.size * 3}px rgba(255,255,255,0.8), 0 0 ${particle.size * 6}px rgba(200,230,255,0.4)`
-                : `0 0 ${particle.size * 2}px #8B5CF640`,
-              animation: winterEnabled 
-                ? `snowfall ${particle.duration}s infinite linear`
-                : `floatStar ${particle.duration}s infinite ease-in-out`,
-              animationDelay: `${particle.delay}s`,
-              '--snow-drift': `${particle.drift}px`,
-              '--snow-opacity': particle.opacity,
-              filter: winterEnabled ? `blur(${particle.blur}px)` : 'none'
+              background: 'linear-gradient(180deg, transparent 0%, rgba(139, 92, 246, 0.05) 50%, transparent 100%)',
+              animation: 'gridPulse 4s ease-in-out infinite'
             }}
           />
-        ))}
-      </div>
+          
+          <div 
+            className="absolute bottom-0 left-1/2 w-[200%] h-[200%]"
+            style={{
+              transform: 'translateX(-50%) perspective(1000px) rotateX(60deg)',
+              transformStyle: 'preserve-3d'
+            }}
+          >
+            <div
+              style={{
+                width: '100%',
+                height: '100%',
+                backgroundImage: `
+                  linear-gradient(rgba(139, 92, 246, 0.4) 2px, transparent 2px),
+                  linear-gradient(90deg, rgba(139, 92, 246, 0.4) 2px, transparent 2px),
+                  linear-gradient(rgba(236, 72, 153, 0.3) 1px, transparent 1px),
+                  linear-gradient(90deg, rgba(236, 72, 153, 0.3) 1px, transparent 1px)
+                `,
+                backgroundSize: '100px 100px, 100px 100px, 20px 20px, 20px 20px',
+                filter: 'blur(0.5px)',
+                boxShadow: `
+                  0 0 100px rgba(139, 92, 246, 0.3),
+                  0 0 200px rgba(236, 72, 153, 0.2)
+                `,
+                animation: 'gridMove 3s linear infinite'
+              }}
+            />
+          </div>
+
+          <div 
+            className="absolute top-0 left-0 w-full h-40"
+            style={{
+              background: 'linear-gradient(180deg, rgba(0, 0, 0, 1) 0%, transparent 100%)',
+              pointerEvents: 'none'
+            }}
+          />
+        </div>
+      )}
+
+      {winterEnabled && (
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
+          {particles.map((particle) => (
+            <div
+              key={particle.id}
+              className="absolute rounded-full will-change-transform"
+              style={{
+                left: `${particle.x}%`,
+                top: `${particle.y}%`,
+                width: `${particle.size}px`,
+                height: `${particle.size}px`,
+                backgroundColor: '#FFFFFF',
+                boxShadow: `0 0 ${particle.size * 3}px rgba(255,255,255,0.8), 0 0 ${particle.size * 6}px rgba(200,230,255,0.4)`,
+                animation: `snowfall ${particle.duration}s infinite linear`,
+                animationDelay: `${particle.delay}s`,
+                '--snow-drift': `${particle.drift}px`,
+                '--snow-opacity': particle.opacity,
+                filter: `blur(${particle.blur}px)`
+              }}
+            />
+          ))}
+        </div>
+      )}
     </>
   );
 }
