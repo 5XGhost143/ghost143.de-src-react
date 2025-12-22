@@ -1,0 +1,11 @@
+{
+  "winterTheme": {
+    "enabled": true,
+    "snowIntensity": "high",
+    "colors": {
+      "primary": "#E3F2FD",
+      "secondary": "#BBDEFB",
+      "accent": "#64B5F6"
+    }
+  }
+}

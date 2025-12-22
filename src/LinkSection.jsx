@@ -1,17 +1,29 @@
 import React from 'react';
-import { FaGithub } from 'react-icons/fa';
-import { FaTwitch } from 'react-icons/fa';
-import { FaSpotify } from 'react-icons/fa';
-import { FaSteam } from 'react-icons/fa';
-import { FaFileContract } from 'react-icons/fa';
+import { FaGithub, FaTwitch, FaSpotify, FaSteam } from 'react-icons/fa';
 
-export default function LinkSection({ isVisible, isMobile }) {
+export default function LinkSection({ isVisible, isMobile, winterEnabled }) {
   const links = [
     { icon: FaGithub, label: 'GitHub', url: 'https://github.com/5XGhost143', color: 'hover:text-purple-400' },
     { icon: FaTwitch, label: 'Twitch', url: 'https://www.twitch.tv/gghost143', color: 'hover:text-blue-400' },
     { icon: FaSteam, label: 'Steam', url: 'https://steamcommunity.com/id/GHOST143/', color: 'hover:text-cyan-400' },
     { icon: FaSpotify, label: 'Spotify', url: 'https://open.spotify.com/user/31snna5blfrzmagarfxqcfdyikau', color: 'hover:text-pink-400' }
   ];
+
+  const winterStyles = winterEnabled ? {
+    bgGradient: 'from-blue-900/40 to-cyan-900/30',
+    borderColor: 'border-blue-400/30',
+    hoverBg: 'hover:from-blue-800/50 hover:to-cyan-800/40',
+    hoverBorder: 'hover:border-blue-300/50',
+    hoverShadow: 'hover:shadow-blue-400/30',
+    glowColor: 'from-blue-400/20 via-cyan-400/20 to-blue-400/20'
+  } : {
+    bgGradient: 'from-gray-900/80 to-gray-800/60',
+    borderColor: 'border-gray-700/50',
+    hoverBg: 'hover:from-white/10 hover:to-white/5',
+    hoverBorder: 'hover:border-white/30',
+    hoverShadow: 'hover:shadow-purple-500/20',
+    glowColor: 'from-purple-500/0 via-pink-500/0 to-cyan-500/0 group-hover:from-purple-500/30 group-hover:via-pink-500/30 group-hover:to-cyan-500/30'
+  };
 
   return (
     <div className={`transition-all duration-1000 delay-500 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'} w-full max-w-md md:max-w-5xl px-4`}>
@@ -25,14 +37,14 @@ export default function LinkSection({ isVisible, isMobile }) {
             className={`
               group relative overflow-hidden
               flex items-center justify-center p-3 sm:p-4 md:p-5
-              bg-gradient-to-br from-gray-900/80 to-gray-800/60 
-              backdrop-blur-lg border border-gray-700/50
+              bg-gradient-to-br ${winterStyles.bgGradient}
+              backdrop-blur-lg border ${winterStyles.borderColor}
               rounded-2xl transition-all duration-500 
               hover:scale-110 active:scale-95
               ${!isMobile ? 'hover:rotate-3 hover:-translate-y-2' : ''}
-              hover:bg-gradient-to-br hover:from-white/10 hover:to-white/5
-              hover:border-white/30 ${link.color}
-              hover:shadow-2xl hover:shadow-purple-500/20
+              hover:bg-gradient-to-br ${winterStyles.hoverBg}
+              ${winterStyles.hoverBorder} ${link.color}
+              hover:shadow-2xl ${winterStyles.hoverShadow}
               w-14 h-14 sm:w-16 sm:h-16 md:w-20 md:h-20
               before:absolute before:inset-0 
               before:bg-gradient-to-br before:from-white/0 before:to-white/0
@@ -47,10 +59,22 @@ export default function LinkSection({ isVisible, isMobile }) {
               animationDelay: `${index * 150}ms`
             }}
           >
-            <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-purple-500/0 via-pink-500/0 to-cyan-500/0 group-hover:from-purple-500/30 group-hover:via-pink-500/30 group-hover:to-cyan-500/30 blur-xl transition-all duration-500 -z-10" />
+            <div className={`absolute inset-0 rounded-2xl bg-gradient-to-r ${winterStyles.glowColor} blur-xl transition-all duration-500 -z-10`} />
             
             <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-white/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500" />
             <div className="absolute top-2 left-2 w-4 h-4 bg-white/30 rounded-full blur-sm opacity-0 group-hover:opacity-100 transition-all duration-500" />
+            
+            {winterEnabled && (
+              <div className="absolute inset-0 rounded-2xl overflow-hidden pointer-events-none">
+                <div 
+                  className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-blue-300/50 to-transparent"
+                  style={{
+                    animation: 'shimmer 2s linear infinite',
+                    animationDelay: `${index * 0.2}s`
+                  }}
+                />
+              </div>
+            )}
             
             <link.icon className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 transition-all duration-500 group-hover:scale-125 group-hover:drop-shadow-2xl relative z-10" />
             

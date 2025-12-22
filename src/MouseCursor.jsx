@@ -1,6 +1,6 @@
 import React, { useRef, useEffect } from 'react';
 
-export default function MouseCursor({ mousePosition, isClicking }) {
+export default function MouseCursor({ mousePosition, isClicking, winterEnabled }) {
   const cursorRef = useRef(null);
   const trailRef = useRef(null);
 
@@ -12,6 +12,10 @@ export default function MouseCursor({ mousePosition, isClicking }) {
       trailRef.current.style.transform = `translate3d(${mousePosition.x - 20}px, ${mousePosition.y - 20}px, 0) ${isClicking ? 'scale(1.5)' : 'scale(1)'}`;
     }
   }, [mousePosition.x, mousePosition.y, isClicking]);
+
+  const colors = winterEnabled 
+    ? { primary: 'rgba(100, 181, 246, 0.6)', secondary: 'rgba(227, 242, 253, 0.5)' }
+    : { primary: 'rgba(139, 92, 246, 0.4)', secondary: 'rgba(236, 72, 153, 0.3)' };
 
   return (
     <>
@@ -42,7 +46,7 @@ export default function MouseCursor({ mousePosition, isClicking }) {
         ref={trailRef}
         className="fixed w-10 h-10 pointer-events-none z-50 will-change-transform"
         style={{
-          background: 'radial-gradient(circle, rgba(139, 92, 246, 0.4) 0%, rgba(236, 72, 153, 0.3) 50%, transparent 70%)',
+          background: `radial-gradient(circle, ${colors.primary} 0%, ${colors.secondary} 50%, transparent 70%)`,
           borderRadius: '50%',
           filter: 'blur(12px)',
           transition: 'transform 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.275)',
@@ -61,8 +65,12 @@ export default function MouseCursor({ mousePosition, isClicking }) {
           <div 
             className="absolute inset-0 rounded-full"
             style={{
-              background: 'linear-gradient(135deg, rgba(139, 92, 246, 0.9), rgba(236, 72, 153, 0.9))',
-              boxShadow: '0 0 20px rgba(139, 92, 246, 0.6), 0 0 40px rgba(236, 72, 153, 0.4)',
+              background: winterEnabled 
+                ? 'linear-gradient(135deg, rgba(100, 181, 246, 0.9), rgba(227, 242, 253, 0.9))'
+                : 'linear-gradient(135deg, rgba(139, 92, 246, 0.9), rgba(236, 72, 153, 0.9))',
+              boxShadow: winterEnabled
+                ? '0 0 20px rgba(100, 181, 246, 0.6), 0 0 40px rgba(227, 242, 253, 0.4)'
+                : '0 0 20px rgba(139, 92, 246, 0.6), 0 0 40px rgba(236, 72, 153, 0.4)',
               animation: 'cursorPulse 2s ease-in-out infinite',
             }}
           />
