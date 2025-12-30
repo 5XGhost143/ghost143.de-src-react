@@ -1,12 +1,14 @@
 import React from 'react';
 import { FaGithub, FaTwitch, FaSpotify, FaSteam } from 'react-icons/fa';
+import { FaServer } from 'react-icons/fa6';
 
 export default function LinkSection({ isVisible, isMobile, winterEnabled }) {
   const links = [
     { icon: FaGithub, label: 'GitHub', url: 'https://github.com/5XGhost143', color: 'hover:text-purple-400' },
     { icon: FaTwitch, label: 'Twitch', url: 'https://www.twitch.tv/gghost143', color: 'hover:text-blue-400' },
     { icon: FaSteam, label: 'Steam', url: 'https://steamcommunity.com/id/GHOST143/', color: 'hover:text-cyan-400' },
-    { icon: FaSpotify, label: 'Spotify', url: 'https://open.spotify.com/user/31snna5blfrzmagarfxqcfdyikau', color: 'hover:text-pink-400' }
+    { icon: FaSpotify, label: 'Spotify', url: 'https://open.spotify.com/user/31snna5blfrzmagarfxqcfdyikau', color: 'hover:text-pink-400' },
+    { icon: FaServer, label: 'Content Server', url: 'https://content.ghost143.de/admin', color: 'hover:text-green-400' }
   ];
 
   const winterStyles = winterEnabled ? {
