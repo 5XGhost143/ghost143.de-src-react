@@ -1,6 +1,6 @@
 import React, { useRef, useEffect } from 'react';
 
-export default function MouseCursor({ mousePosition, isClicking, winterEnabled }) {
+export default function MouseCursor({ mousePosition, isClicking, winterEnabled, newYearEnabled }) {
   const cursorRef = useRef(null);
   const trailRef = useRef(null);
 
@@ -13,9 +13,46 @@ export default function MouseCursor({ mousePosition, isClicking, winterEnabled }
     }
   }, [mousePosition.x, mousePosition.y, isClicking]);
 
-  const colors = winterEnabled 
-    ? { primary: 'rgba(100, 181, 246, 0.6)', secondary: 'rgba(227, 242, 253, 0.5)' }
-    : { primary: 'rgba(139, 92, 246, 0.4)', secondary: 'rgba(236, 72, 153, 0.3)' };
+  const getColors = () => {
+    if (winterEnabled) {
+      return { 
+        primary: 'rgba(100, 181, 246, 0.6)', 
+        secondary: 'rgba(227, 242, 253, 0.5)' 
+      };
+    } else if (newYearEnabled) {
+      return { 
+        primary: 'rgba(255, 215, 0, 0.6)', 
+        secondary: 'rgba(255, 107, 107, 0.5)' 
+      };
+    } else {
+      return { 
+        primary: 'rgba(139, 92, 246, 0.4)', 
+        secondary: 'rgba(236, 72, 153, 0.3)' 
+      };
+    }
+  };
+
+  const getCursorGradient = () => {
+    if (winterEnabled) {
+      return 'linear-gradient(135deg, rgba(100, 181, 246, 0.9), rgba(227, 242, 253, 0.9))';
+    } else if (newYearEnabled) {
+      return 'linear-gradient(135deg, rgba(255, 215, 0, 0.9), rgba(255, 107, 107, 0.9))';
+    } else {
+      return 'linear-gradient(135deg, rgba(139, 92, 246, 0.9), rgba(236, 72, 153, 0.9))';
+    }
+  };
+
+  const getCursorShadow = () => {
+    if (winterEnabled) {
+      return '0 0 20px rgba(100, 181, 246, 0.6), 0 0 40px rgba(227, 242, 253, 0.4)';
+    } else if (newYearEnabled) {
+      return '0 0 20px rgba(255, 215, 0, 0.6), 0 0 40px rgba(255, 107, 107, 0.4)';
+    } else {
+      return '0 0 20px rgba(139, 92, 246, 0.6), 0 0 40px rgba(236, 72, 153, 0.4)';
+    }
+  };
+
+  const colors = getColors();
 
   return (
     <>
@@ -65,12 +102,8 @@ export default function MouseCursor({ mousePosition, isClicking, winterEnabled }
           <div 
             className="absolute inset-0 rounded-full"
             style={{
-              background: winterEnabled 
-                ? 'linear-gradient(135deg, rgba(100, 181, 246, 0.9), rgba(227, 242, 253, 0.9))'
-                : 'linear-gradient(135deg, rgba(139, 92, 246, 0.9), rgba(236, 72, 153, 0.9))',
-              boxShadow: winterEnabled
-                ? '0 0 20px rgba(100, 181, 246, 0.6), 0 0 40px rgba(227, 242, 253, 0.4)'
-                : '0 0 20px rgba(139, 92, 246, 0.6), 0 0 40px rgba(236, 72, 153, 0.4)',
+              background: getCursorGradient(),
+              boxShadow: getCursorShadow(),
               animation: 'cursorPulse 2s ease-in-out infinite',
             }}
           />

@@ -11,6 +11,7 @@ export default function App() {
   const [isMobile, setIsMobile] = useState(false);
   const [isClicking, setIsClicking] = useState(false);
   const winterEnabled = AppThemeSettings.winterTheme.enabled;
+  const newYearEnabled = AppThemeSettings.newYearTheme.enabled;
   const rafId = useRef(null);
 
   const handleMouseMove = useCallback((e) => {
@@ -57,21 +58,27 @@ export default function App() {
     };
   }, [handleMouseMove, handleMouseDown, handleMouseUp]);
 
+  const backgroundColor = winterEnabled 
+    ? '#0a1929' 
+    : newYearEnabled 
+    ? '#1a1a1f' 
+    : '#000000';
+
   return (
     <div 
       className="min-h-screen text-white overflow-hidden relative select-none transition-colors duration-1000" 
       style={{ 
         cursor: isMobile ? 'auto' : 'none',
-        backgroundColor: winterEnabled ? '#0a1929' : '#000000'
+        backgroundColor: backgroundColor
       }}
       onContextMenu={(e) => e.preventDefault()}
     >
-      {!isMobile && <MouseCursor mousePosition={mousePosition} isClicking={isClicking} winterEnabled={winterEnabled} />}
-      <AnimatedBackground mousePosition={mousePosition} winterEnabled={winterEnabled} />
+      {!isMobile && <MouseCursor mousePosition={mousePosition} isClicking={isClicking} winterEnabled={winterEnabled} newYearEnabled={newYearEnabled} />}
+      <AnimatedBackground mousePosition={mousePosition} winterEnabled={winterEnabled} newYearEnabled={newYearEnabled} />
 
       <div className="relative z-10 flex flex-col items-center justify-center min-h-screen px-4 py-8">
-        <Header isVisible={isVisible} winterEnabled={winterEnabled} />
-        <LinkSection isVisible={isVisible} isMobile={isMobile} winterEnabled={winterEnabled} />
+        <Header isVisible={isVisible} winterEnabled={winterEnabled} newYearEnabled={newYearEnabled} />
+        <LinkSection isVisible={isVisible} isMobile={isMobile} winterEnabled={winterEnabled} newYearEnabled={newYearEnabled} />
 
         <div className={`absolute bottom-4 md:bottom-8 text-center transition-all duration-1000 delay-1000 ${isVisible ? 'opacity-100' : 'opacity-0'} px-4`}>
           <p className="text-gray-600 text-xs md:text-sm tracking-widest">
