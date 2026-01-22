@@ -2,104 +2,30 @@ import React from 'react';
 import { FaGithub, FaTwitch, FaSpotify, FaSteam } from 'react-icons/fa';
 import { FaServer } from 'react-icons/fa6';
 
-export default function LinkSection({ isVisible, isMobile, winterEnabled, newYearEnabled }) {
+export default function LinkSection({ isVisible }) {
   const links = [
-    { icon: FaGithub, label: 'GitHub', url: 'https://github.com/5XGhost143', color: 'hover:text-purple-400' },
-    { icon: FaTwitch, label: 'Twitch', url: 'https://www.twitch.tv/gghost143', color: 'hover:text-blue-400' },
-    { icon: FaSteam, label: 'Steam', url: 'https://steamcommunity.com/id/GHOST143/', color: 'hover:text-cyan-400' },
-    { icon: FaSpotify, label: 'Spotify', url: 'https://open.spotify.com/user/31snna5blfrzmagarfxqcfdyikau', color: 'hover:text-pink-400' },
-    { icon: FaServer, label: 'Content Server', url: 'https://content.ghost143.de/admin', color: 'hover:text-green-400' }
+    { icon: FaGithub, label: 'GitHub', url: 'https://github.com/5XGhost143' },
+    { icon: FaTwitch, label: 'Twitch', url: 'https://www.twitch.tv/gghost143' },
+    { icon: FaSteam, label: 'Steam', url: 'https://steamcommunity.com/id/GHOST143/' },
+    { icon: FaSpotify, label: 'Spotify', url: 'https://open.spotify.com/user/31snna5blfrzmagarfxqcfdyikau' },
+    { icon: FaServer, label: 'Content Server', url: 'https://content.ghost143.de/admin' }
   ];
 
-  const getStyles = () => {
-    if (winterEnabled) {
-      return {
-        bgGradient: 'from-blue-900/40 to-cyan-900/30',
-        borderColor: 'border-blue-400/30',
-        hoverBg: 'hover:from-blue-800/50 hover:to-cyan-800/40',
-        hoverBorder: 'hover:border-blue-300/50',
-        hoverShadow: 'hover:shadow-blue-400/30',
-        glowColor: 'from-blue-400/20 via-cyan-400/20 to-blue-400/20'
-      };
-    } else if (newYearEnabled) {
-      return {
-        bgGradient: 'from-gray-800/60 to-gray-900/70',
-        borderColor: 'border-yellow-500/30',
-        hoverBg: 'hover:from-yellow-900/40 hover:to-orange-900/30',
-        hoverBorder: 'hover:border-yellow-400/50',
-        hoverShadow: 'hover:shadow-yellow-500/30',
-        glowColor: 'from-yellow-400/20 via-orange-400/20 to-red-400/20'
-      };
-    } else {
-      return {
-        bgGradient: 'from-gray-900/80 to-gray-800/60',
-        borderColor: 'border-gray-700/50',
-        hoverBg: 'hover:from-white/10 hover:to-white/5',
-        hoverBorder: 'hover:border-white/30',
-        hoverShadow: 'hover:shadow-purple-500/20',
-        glowColor: 'from-purple-500/0 via-pink-500/0 to-cyan-500/0 group-hover:from-purple-500/30 group-hover:via-pink-500/30 group-hover:to-cyan-500/30'
-      };
-    }
-  };
-
-  const styles = getStyles();
-
   return (
-    <div className={`transition-all duration-1000 delay-500 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'} w-full max-w-md md:max-w-5xl px-4`}>
-      <div className="flex flex-wrap justify-center gap-3 sm:gap-4 md:gap-6">
+    <div className={`transition-all duration-700 delay-300 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'} w-full max-w-md md:max-w-5xl px-4`}>
+      <div className="flex flex-wrap justify-center gap-4 md:gap-6">
         {links.map((link, index) => (
           <a
             key={index}
             href={link.url}
             target="_blank"
             rel="noopener noreferrer"
-            className={`
-              group relative overflow-hidden
-              flex items-center justify-center p-3 sm:p-4 md:p-5
-              bg-gradient-to-br ${styles.bgGradient}
-              backdrop-blur-lg border ${styles.borderColor}
-              rounded-2xl transition-all duration-500 
-              hover:scale-110 active:scale-95
-              ${!isMobile ? 'hover:rotate-3 hover:-translate-y-2' : ''}
-              hover:bg-gradient-to-br ${styles.hoverBg}
-              ${styles.hoverBorder} ${link.color}
-              hover:shadow-2xl ${styles.hoverShadow}
-              w-14 h-14 sm:w-16 sm:h-16 md:w-20 md:h-20
-              before:absolute before:inset-0 
-              before:bg-gradient-to-br before:from-white/0 before:to-white/0
-              hover:before:from-white/20 hover:before:to-white/5
-              before:transition-all before:duration-500 before:rounded-2xl
-              after:absolute after:inset-0 after:rounded-2xl
-              after:bg-gradient-to-br after:from-transparent after:via-white/5 after:to-transparent
-              after:opacity-0 hover:after:opacity-100 after:transition-all after:duration-500
-              ${isMobile ? 'cursor-pointer' : 'cursor-none'}
-            `}
-            style={{
-              animationDelay: `${index * 150}ms`
-            }}
+            className="group relative flex items-center justify-center w-16 h-16 md:w-20 md:h-20 bg-neutral-800 border border-neutral-700 rounded-xl transition-all duration-300 hover:bg-white hover:border-white hover:scale-110 active:scale-95"
           >
-            <div className={`absolute inset-0 rounded-2xl bg-gradient-to-r ${styles.glowColor} blur-xl transition-all duration-500 -z-10`} />
+            <link.icon className="w-7 h-7 md:w-8 md:h-8 text-white transition-colors duration-300 group-hover:text-black" />
             
-            <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-white/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500" />
-            <div className="absolute top-2 left-2 w-4 h-4 bg-white/30 rounded-full blur-sm opacity-0 group-hover:opacity-100 transition-all duration-500" />
-            
-            {(winterEnabled || newYearEnabled) && (
-              <div className="absolute inset-0 rounded-2xl overflow-hidden pointer-events-none">
-                <div 
-                  className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-blue-300/50 to-transparent"
-                  style={{
-                    animation: 'shimmer 2s linear infinite',
-                    animationDelay: `${index * 0.2}s`
-                  }}
-                />
-              </div>
-            )}
-            
-            <link.icon className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 transition-all duration-500 group-hover:scale-125 group-hover:drop-shadow-2xl relative z-10" />
-            
-            <div className="absolute -bottom-12 left-1/2 transform -translate-x-1/2 px-3 py-1 bg-black/90 text-white text-xs rounded-lg opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none whitespace-nowrap backdrop-blur-sm border border-gray-700/50">
+            <div className="absolute -bottom-10 left-1/2 transform -translate-x-1/2 px-3 py-1 bg-white text-black text-xs rounded-md opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none whitespace-nowrap">
               {link.label}
-              <div className="absolute -top-1 left-1/2 transform -translate-x-1/2 w-2 h-2 bg-black/90 rotate-45 border-l border-t border-gray-700/50" />
             </div>
           </a>
         ))}
